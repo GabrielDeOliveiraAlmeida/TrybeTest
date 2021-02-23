@@ -1,9 +1,16 @@
 // import React from 'react'
-// import {Re} from 'react-dom'
+// import { Switch, Route, BrowserRouter } from 'react-router-dom'
+
+// import { TableMain } from '../../presentations/pages/index'
 
 // const Routes = () => {
-//   return (<> </>
-//   )
+//     return (
+//         <BrowserRouter>
+//             <Switch>
+//                 <Route path="/" exact component={TableMain} />
+//             </Switch>
+//         </BrowserRouter>
+//     )
 // }
 
 // export default Routes

@@ -1,27 +1,27 @@
 {
-  "compilerOptions": {
-    "target": "es6",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "jsx": "react",
-    "paths": {
-      "@/*": [
-        "*"
-      ]
+    "compilerOptions": {
+      "target": "es6",
+      "lib": [
+        "DOM",
+        "DOM.Iterable",
+        "ESNext"
+      ],
+      "esModuleInterop": true,
+      "module": "esnext",
+      "moduleResolution": "node",
+      "jsx": "react",
+      "paths": {
+        "@/*": [
+          "*"
+        ]
+      },
+      "rootDir": "src",
+      "baseUrl": "src",
+      "allowJs": true,
+      "strict": true,
+      "resolveJsonModule": true,
     },
-    "rootDir": "src",
-    "baseUrl": "src",
-    "allowJs": true,
-    "strict": true,
-    "resolveJsonModule": true,
-  },
-  "include": [
-    "src"
-  ]
-}
+    "include": [
+      "src"
+    ]
+  }
