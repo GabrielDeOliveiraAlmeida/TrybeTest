@@ -4,14 +4,22 @@ import Table from '@material-ui/core/Table/Table'
 import TableContainer from '@material-ui/core/TableContainer/TableContainer'
 import TablePagination from '@material-ui/core/TablePagination/TablePagination'
 
+export const MainContainer = styled(Grid)` 
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    align-items: center;
+`
+
 export const MyTablePagination = styled(TablePagination)` 
     overflow: hidden;
     width: 100%;
 `
 
 export const MyTableContainer = styled(TableContainer)` 
-    width: 100%;
-    height: 100%;
+    &.MuiTableContainer-root{
+        width: 80%;
+    }
 `
 
 export const MyTable = styled(Table)` 

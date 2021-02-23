@@ -1,66 +1,17 @@
 import React from 'react'
-import { Grid, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core'
-import { MyTableContainer, MyTable } from './styled'
+import { MyTableContainer, MyTable, MainContainer } from './styles'
+import { MyTableBody, TableHeader } from '@/presentations/components'
 
 const TableMain: React.FC = () => {
   return (
-    <Grid container>
+    <MainContainer className={'test'} container>
       <MyTableContainer>
           <MyTable stickyHeader>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  align={'left'}
-                  variant={'head'}
-                  style={{
-                    fontWeight: 'bold',
-                    backgroundColor: 'white'
-                  }}
-                >
-                  {'Teste'}
-                </TableCell>
-                <TableCell
-                  align={'left'}
-                  variant={'head'}
-                  style={{
-                    fontWeight: 'bold',
-                    backgroundColor: 'white'
-                  }}
-                >
-                  {'Teste'}
-                </TableCell>
-                <TableCell
-                  align={'left'}
-                  variant={'head'}
-                  style={{
-                    fontWeight: 'bold',
-                    backgroundColor: 'white'
-                  }}
-                >
-                  {'Teste'}
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow
-                hover
-                tabIndex={-1}
-                onClick={() => { console.log('Clkci') }}
-              >
-                <TableCell align={'left'}>
-                  TesteCell
-                </TableCell>
-                <TableCell align={'left'}>
-                  TesteCell
-                </TableCell>
-                <TableCell align={'left'}>
-                  TesteCell
-                </TableCell>
-              </TableRow>
-            </TableBody>
+            <TableHeader />
+            <MyTableBody />
           </MyTable>
       </MyTableContainer>
-    </Grid>
+    </MainContainer>
   )
 }
 
