@@ -4,10 +4,10 @@ import { LoadData } from '@/domain/usecases/load-data/load-data'
 export class RemoteLoadData implements LoadData {
   constructor (
     private readonly url: string,
-    private readonly httpClient: HttpClient<LoadData.Model[]>
+    private readonly httpClient: HttpClient<LoadData.Model>
   ) {}
 
-  async loadData (params: LoadData.Params): Promise<LoadData.Model[]> {
+  async loadData (params: LoadData.Params): Promise<LoadData.Model> {
     let url = this.url
     if (params.page) {
       url = `${this.url}/?page=${params.page}`
@@ -16,10 +16,10 @@ export class RemoteLoadData implements LoadData {
       url: url,
       method: 'get'
     })
-    const data = httpResponse.body || []
+    const data = httpResponse.body || {} as LoadData.Model
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok: return data
-      case HttpStatusCode.noContent: return []
+      case HttpStatusCode.noContent: return {} as LoadData.Model
       default: throw new Error()
     }
   }

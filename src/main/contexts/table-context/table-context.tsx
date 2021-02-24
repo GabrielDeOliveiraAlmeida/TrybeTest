@@ -5,7 +5,7 @@ import React, {
 } from 'react'
 
 type TableContextProps = {
-  data: LoadData.Model[]
+  data: LoadData.ModelResults[]
   loadData: (page: LoadData.Params) => Promise<void>
 }
 
@@ -19,17 +19,17 @@ type TableProviderProps = {
 
 // eslint-disable-next-line react/prop-types
 const TableProvider: React.FC<TableProviderProps> = ({ children, httpMethod }) => {
-  const [data, setData] = useState<LoadData.Model[]>([])
+  const [data, setData] = useState<LoadData.ModelResults[]>([])
 
   const loadData = async (params: LoadData.Params): Promise<void> => {
     console.log('Load Data', params)
     // eslint-disable-next-line react/prop-types
-    const data = await httpMethod.loadData({
+    const getData = await httpMethod.loadData({
       page: params.page
     })
 
-    console.log(data)
-    setData(data)
+    console.log(getData.results, getData.count)
+    setData(getData.results)
   }
 
   return (

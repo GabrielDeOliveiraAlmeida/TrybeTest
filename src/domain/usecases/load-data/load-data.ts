@@ -1,5 +1,5 @@
 export interface LoadData {
-  loadData: (params: LoadData.Params) => Promise<LoadData.Model[]>
+  loadData: (params: LoadData.Params) => Promise<LoadData.Model>
 }
 
 export namespace LoadData {
@@ -9,6 +9,11 @@ export namespace LoadData {
   }
 
   export type Model = {
+    count: number
+    results: ModelResults[]
+  }
+
+  export type ModelResults = {
     name: string
     rotation_period: number
     orbital_period: number
@@ -19,5 +24,9 @@ export namespace LoadData {
     surface_water: number
     population: number
     residents: string[]
+    films: string[]
+    created: Date
+    edited: Date
+    url: string
   }
 }
