@@ -1,7 +1,16 @@
+import { TableContext } from '@/main/contexts'
 import { TableRow, TableCell, TableBody } from '@material-ui/core'
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 
 const MyTableBody: React.FC = () => {
+  const { loadData } = useContext(TableContext)
+
+  useEffect(() => {
+    loadData({
+      page: 1
+    })
+  }, [])
+
   return (
     <TableBody>
     <TableRow

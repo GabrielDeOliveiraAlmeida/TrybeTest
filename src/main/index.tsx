@@ -1,8 +1,8 @@
 import React from 'react'
-import TableMain from '@/presentations/pages/table-main/table-main'
 import ReactDom from 'react-dom'
+import App from './routes/app'
 
 ReactDom.render(
-    <TableMain />,
+    <App />,
     document.getElementById('main')
 )

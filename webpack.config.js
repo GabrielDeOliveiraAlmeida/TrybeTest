@@ -17,7 +17,8 @@ module.exports = {
   devServer: {
     contentBase: './public',
     writeToDisk: true,
-    historyApiFallback: true
+    historyApiFallback: true,
+    overlay: true
 
   },
   module: {
