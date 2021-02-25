@@ -22,7 +22,6 @@ const TableProvider: React.FC<TableProviderProps> = ({ children, httpMethod }) =
   const [data, setData] = useState<LoadData.ModelResults[]>([])
 
   const loadData = async (params: LoadData.Params): Promise<void> => {
-    console.log('Load Data', params)
     // eslint-disable-next-line react/prop-types
     const getData = await httpMethod.loadData({
       page: params.page

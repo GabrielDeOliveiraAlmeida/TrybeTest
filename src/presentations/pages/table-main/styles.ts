@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import Grid from '@material-ui/core/Grid/Grid'
 import Table from '@material-ui/core/Table/Table'
 import TableContainer from '@material-ui/core/TableContainer/TableContainer'
-import TablePagination from '@material-ui/core/TablePagination/TablePagination'
 
 export const MainContainer = styled(Grid)` 
     display: flex;
@@ -11,19 +10,17 @@ export const MainContainer = styled(Grid)`
     align-items: center;
 `
 
-export const MyTablePagination = styled(TablePagination)` 
-    overflow: hidden;
-    width: 100%;
+export const ContainerGrid = styled(Grid)` 
+    width: 80%;
+    border: 1px solid rgba(0,0,0,0.15);
 `
 
 export const MyTableContainer = styled(TableContainer)` 
-    &.MuiTableContainer-root{
-        width: 80%;
-    }
+    height: 400px;
+    overflow: auto;
 `
 
 export const MyTable = styled(Table)` 
-    border: 1px solid rgba(0,0,0,0.15);
 `
 
 export const ContainerMain = styled(Grid)`
