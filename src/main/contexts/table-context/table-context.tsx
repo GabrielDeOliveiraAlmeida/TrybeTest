@@ -38,7 +38,7 @@ const TableProvider: React.FC<TableProviderProps> = (props: TableProviderProps) 
     setPage(newPage)
     if ((newPage + 1) * 10 > data.length) {
       loadData({
-        page: newPage
+        page: newPage + 1
       })
     }
   }
