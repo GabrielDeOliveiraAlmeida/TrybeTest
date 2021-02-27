@@ -7,7 +7,11 @@ export type MyLinkUrlProps = {
 
 const MyLinkUrl: React.FC<MyLinkUrlProps> = ({ url }: MyLinkUrlProps) => {
   return (
-        <Link href={url} target='_blank' noWrap>
+        <Link
+          href={url}
+          target='_blank'
+          noWrap
+          >
             {url}
         </Link>
   )

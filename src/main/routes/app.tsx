@@ -1,3 +1,4 @@
+import { MyHeaderPage } from '@/presentations/components'
 import React from 'react'
 import { TableMain } from '../../presentations/pages/index'
 import { TableProvider } from '../contexts'
@@ -7,6 +8,7 @@ const App: React.FC = () => {
   return (
         <TableProvider
           httpMethod={makeRemoteLoadData()} >
+            <MyHeaderPage />
             <TableMain />
         </TableProvider>
   )

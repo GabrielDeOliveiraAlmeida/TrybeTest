@@ -16,7 +16,7 @@ const TableHeader: React.FC = () => {
             variant={'head'}
             style={{
               fontWeight: 'bold',
-              backgroundColor: 'white'
+              maxWidth: 140
             }}
           >
             {columns}

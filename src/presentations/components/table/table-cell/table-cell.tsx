@@ -1,7 +1,7 @@
 import React from 'react'
 import { TableCell, Typography } from '@material-ui/core'
 import { formatValue } from '@/utils/formatter'
-import { MyDropDown, MyLinkUrl } from '..'
+import { MyDropDown, MyLinkUrl } from '../../'
 import { validatorUrl } from '@/utils/validators'
 
 export type MyTableCellValue = number | string | string[] | Date

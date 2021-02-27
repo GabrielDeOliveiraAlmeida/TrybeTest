@@ -8,6 +8,7 @@ type TableContextProps = {
   data: LoadData.ModelResults[]
   page: number
   count: number
+  loading: boolean
   columnsName: string[]
   invalidColumns: string[]
   loadData: (page: LoadData.Params) => Promise<void>
@@ -33,6 +34,7 @@ const TableProvider: React.FC<TableProviderProps> = (props: TableProviderProps) 
   const [invalidColumns] = useState<string[]>(['residents'])
   const [page, setPage] = useState<number>(0)
   const [count, setCount] = useState<number>(0)
+  const [loading, setLoading] = useState<boolean>(true)
 
   const setNewPage = (newPage: number): void => {
     setPage(newPage)
@@ -45,35 +47,38 @@ const TableProvider: React.FC<TableProviderProps> = (props: TableProviderProps) 
 
   const loadData = async (params: LoadData.Params): Promise<void> => {
     const { page } = params
+    setLoading(true)
     const getData = await httpMethod.loadData({
       page: page
     })
+    setLoading(false)
     setData([...data, ...getData.results])
   }
-
   const getData = async (): Promise<void> => {
     const getData = await httpMethod.loadData({
       page: page
     })
     const result: LoadData.ModelResults[] = getData.results
 
-    setColumnsName(Object.getOwnPropertyNames(result[0]))
+    setColumnsName(Object.keys(result[0]))
     setCount(getData.count)
+    setLoading(false)
     setData([...data, ...getData.results])
   }
 
   return (
     <TableContext.Provider
-    value = {{
-      data,
-      columnsName,
-      invalidColumns,
-      page,
-      count,
-      setNewPage,
-      loadData,
-      getData
-    }}
+      value={{
+        data,
+        columnsName,
+        invalidColumns,
+        page,
+        count,
+        loading,
+        setNewPage,
+        loadData,
+        getData
+      }}
     >
       {children}
     </TableContext.Provider>
