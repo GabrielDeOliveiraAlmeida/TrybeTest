@@ -5,12 +5,10 @@ import { TableContext } from '@/main/contexts'
 import MyTablePagination from '@/presentations/components/table-pagination/table-pagination'
 
 const TableMain: React.FC = () => {
-  const { loadData } = useContext(TableContext)
+  const { getData } = useContext(TableContext)
 
   useEffect(() => {
-    loadData({
-      page: 1
-    })
+    getData()
   }, [])
 
   return (

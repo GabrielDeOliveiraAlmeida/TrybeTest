@@ -1,42 +1,30 @@
+import { TableContext } from '@/main/contexts'
 import { TableHead, TableRow, TableCell } from '@material-ui/core'
-import React from 'react'
+import React, { useContext } from 'react'
 
 const TableHeader: React.FC = () => {
+  const { columnsName, invalidColumns } = useContext(TableContext)
   return (
-        <TableHead>
-            <TableRow>
-                <TableCell
-                    align={'left'}
-                    variant={'head'}
-                    style={{
-                      fontWeight: 'bold',
-                      backgroundColor: 'white'
-                    }}
-                >
-                    {'Teste'}
-                </TableCell>
-                <TableCell
-                    align={'left'}
-                    variant={'head'}
-                    style={{
-                      fontWeight: 'bold',
-                      backgroundColor: 'white'
-                    }}
-                >
-                    {'Teste'}
-                </TableCell>
-                <TableCell
-                    align={'left'}
-                    variant={'head'}
-                    style={{
-                      fontWeight: 'bold',
-                      backgroundColor: 'white'
-                    }}
-                >
-                    {'Teste'}
-                </TableCell>
-            </TableRow>
-        </TableHead>
+    <TableHead>
+      <TableRow>
+        {columnsName.map((columns, index) => {
+          if (!invalidColumns.some(elem => elem !== columns)) return <></>
+          return (
+          <TableCell
+            key={index}
+            align={'left'}
+            variant={'head'}
+            style={{
+              fontWeight: 'bold',
+              backgroundColor: 'white'
+            }}
+          >
+            {columns}
+          </TableCell>
+          )
+        })}
+      </TableRow>
+    </TableHead>
   )
 }
 

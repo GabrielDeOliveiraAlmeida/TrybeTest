@@ -1,27 +1,34 @@
-import { formatValue } from '@/formatter'
+import { LoadData } from '@/domain/usecases/load-data/load-data'
 import { TableContext } from '@/main/contexts'
-import { TableBody, Typography } from '@material-ui/core'
+import { TableBody } from '@material-ui/core'
 import React, { useContext } from 'react'
-import { MyDropDown, MyLinkUrl } from '..'
 import MyTableCell from '../table-cell/table-cell'
 import { MyTableRow } from './styled'
 
 const MyTableBody: React.FC = () => {
-  const { data } = useContext(TableContext)
+  const { data, invalidColumns, page } = useContext(TableContext)
+  const rowsPerPage = 10
+
   return (
     <TableBody>
-      {data.map((tableRow, index) => {
-        return (
-          <MyTableRow
-            key={index}
-            hover
-            tabIndex={-1}
-            onClick={() => { console.log('Clkci') }}
-          >
-            <MyTableCell>
-              <Typography noWrap>{tableRow.name}</Typography>
-            </MyTableCell>
-            <MyTableCell>
+      {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .map((tableRow: LoadData.ModelResults, index) => {
+          return (
+            <MyTableRow
+              key={index}
+              hover
+              tabIndex={-1}
+              onClick={() => { console.log('Clkci') }}
+            >
+              {Object.keys(tableRow)
+                .map((row: string, index: number) => {
+                  const key: keyof LoadData.ModelResults = row as keyof LoadData.ModelResults
+                  if (invalidColumns.some(elem => elem === row)) return (<></>)
+                  return (
+                    <MyTableCell key={index} value={tableRow[key]} />
+                  )
+                })}
+              {/* <MyTableCell>
               <Typography noWrap>{formatValue(tableRow.rotation_period)}</Typography>
             </MyTableCell>
             <MyTableCell>
@@ -49,14 +56,14 @@ const MyTableBody: React.FC = () => {
               <Typography noWrap>{(tableRow.edited)}</Typography>
             </MyTableCell>
             <MyTableCell>
-              <MyLinkUrl url={tableRow.url}/>
+              <MyLinkUrl url={tableRow.url} />
             </MyTableCell>
             <MyTableCell>
               <MyDropDown cellValues={tableRow.films} />
-            </MyTableCell>
-          </MyTableRow>
-        )
-      })}
+            </MyTableCell> */}
+            </MyTableRow>
+          )
+        })}
 
     </TableBody>
   )

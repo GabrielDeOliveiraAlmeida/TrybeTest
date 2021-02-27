@@ -7,11 +7,11 @@ export class RemoteLoadData implements LoadData {
     private readonly httpClient: HttpClient<LoadData.Model>
   ) {}
 
-  async loadData (): Promise<LoadData.Model> {
-    const url = this.url
-    // if (params.page) {
-    //   url = `${this.url}/?page=${params.page}`
-    // }
+  async loadData (params?: LoadData.Params): Promise<LoadData.Model> {
+    let url = this.url
+    if (params) {
+      if (params.page) { url = `${this.url}/?page=${params.page}` }
+    }
     const httpResponse = await this.httpClient.request({
       url: url,
       method: 'get'
