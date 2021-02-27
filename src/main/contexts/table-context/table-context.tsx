@@ -35,8 +35,8 @@ const TableProvider: React.FC<TableProviderProps> = (props: TableProviderProps) 
   const [count, setCount] = useState<number>(0)
 
   const setNewPage = (newPage: number): void => {
+    setPage(newPage)
     if ((newPage + 1) * 10 > data.length) {
-      setPage(newPage)
       loadData({
         page: newPage
       })
