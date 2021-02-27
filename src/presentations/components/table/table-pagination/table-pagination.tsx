@@ -6,9 +6,6 @@ const MyTablePagination: React.FC = () => {
   const { count, page, setNewPage } = useContext(TableContext)
 
   const handleChangePage = (newPage: number): void => {
-    // loadData({
-    //   page: newPage
-    // })
     setNewPage(newPage)
   }
 
