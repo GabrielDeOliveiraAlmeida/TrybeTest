@@ -9,11 +9,7 @@ import { FilterData } from '@/domain/usecases'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 
-type DialogBoxItemProps = {
-  saveFilters: (newObj: FilterData.ModelFilterNumber) => void
-}
-
-const DialogBoxItem: React.FC<DialogBoxItemProps> = ({ saveFilters }: DialogBoxItemProps) => {
+const DialogBoxItem: React.FC = () => {
   const { columnsName } = useContext(TableContext)
   const [editionMode, setEditionMode] = useState<boolean>(true)
   const [value, setValue] = useState<string>('')
@@ -41,11 +37,11 @@ const DialogBoxItem: React.FC<DialogBoxItemProps> = ({ saveFilters }: DialogBoxI
   }
 
   const saveFilter = (): void => {
-    saveFilters({
-      column: columnValue,
-      logicalOperator: logical,
-      value: value
-    })
+    // saveFilters({
+    //   column: columnValue,
+    //   logicalOperator: logical,
+    //   value: value
+    // })
     setEditionMode(false)
   }
 

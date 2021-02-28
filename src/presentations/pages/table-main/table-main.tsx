@@ -7,7 +7,7 @@ import LinearProgress from '@material-ui/core/LinearProgress/LinearProgress'
 import { TextField } from '@material-ui/core'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import Button from '@material-ui/core/Button/Button'
-import DialogBox from '@/presentations/components/dialog-box/dialog-box'
+import DialogFilter from '@/presentations/components/dialog-filter/dialog-filter'
 
 const TableMain: React.FC = () => {
   const { getData, loading, setNewPage } = useContext(TableContext)
@@ -48,7 +48,7 @@ const TableMain: React.FC = () => {
   }
   return (
     <MainContainer container>
-      <DialogBox />
+      <DialogFilter />
       {filtroContainer()}
       <ContainerGrid>
         {loading && <LinearProgress />}
