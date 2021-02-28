@@ -6,10 +6,10 @@ export const GridContainer = styled(Grid)`
     width: 100%;
     justify-content: center;
     align-items: center;
+    background-color: rgba(0,0,0,0.05);
 `
 
 export const HeaderContainer = styled(Grid)` 
-    height: 90px;
     padding: 24px 0px;
     width: 80%;
 `

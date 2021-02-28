@@ -17,6 +17,14 @@ export const FilterContext = createContext<FilterData>(
 export const FilterProvider: React.FC<FilterContextProps> = (props: FilterContextProps) => {
   const { children } = props
 
+  const [columnsFilter, setColumnsFilter] = useState<FilterData.ModalColumnsFilter[]>([
+    { disable: false, name: 'population' },
+    { disable: false, name: 'orbital_period' },
+    { disable: false, name: 'diameter' },
+    { disable: false, name: 'rotation_period' },
+    { disable: false, name: 'surface_water' }
+  ])
+
   const [filter, setFilters] = useState<FilterData.Model>({
     filters: {
       filterByName: {
@@ -26,6 +34,14 @@ export const FilterProvider: React.FC<FilterContextProps> = (props: FilterContex
       ]
     }
   })
+
+  const setColumnStatus = (newFilter: FilterData.ModelFilterNumber): void => {
+    const newColumns = columnsFilter.map(elem => {
+      if (newFilter.column === elem.name) elem.disable = !elem.disable
+      return elem
+    })
+    setColumnsFilter([...newColumns])
+  }
 
   const setNameFilter = (newFilter: FilterData.ModeFilterName): void => {
     filter.filters.filterByName.name = newFilter.name
@@ -52,9 +68,11 @@ export const FilterProvider: React.FC<FilterContextProps> = (props: FilterContex
     <FilterContext.Provider
         value={{
           filter,
+          columnsFilter,
           setNameFilter,
           setNumericFilter,
-          removeFilter
+          removeFilter,
+          setColumnStatus
         }}
     >
       { children }

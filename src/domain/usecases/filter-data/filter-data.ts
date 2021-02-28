@@ -1,8 +1,10 @@
 export interface FilterData {
   filter: FilterData.Model
+  columnsFilter: FilterData.ModalColumnsFilter[]
   setNumericFilter: (newFilter: FilterData.ModelFilterNumber) => void
   setNameFilter: (newFilter: FilterData.ModeFilterName) => void
   removeFilter: (newFilter: FilterData.ModelFilterNumber) => void
+  setColumnStatus: (newFilter: FilterData.ModelFilterNumber) => void
 }
 
 export namespace FilterData {
@@ -25,6 +27,11 @@ export namespace FilterData {
     column: string
     logicalOperator: LogicalOperator
     value: string
+  }
+
+  export type ModalColumnsFilter = {
+    name: string
+    disable: boolean
   }
 
   export enum LogicalOperator { 'maior que', 'menor que', 'igual a' }

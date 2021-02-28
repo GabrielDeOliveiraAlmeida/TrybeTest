@@ -30,6 +30,6 @@ export const MyButtonGroup = styled(Grid)`
 
 export const MyInputLabel = styled(Grid)` 
     display: flex;
-    padding: 8px 0px;
+    padding: 4px 0px;
     
 `

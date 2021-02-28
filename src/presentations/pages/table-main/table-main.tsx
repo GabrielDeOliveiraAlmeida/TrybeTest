@@ -22,7 +22,7 @@ import { FilterData } from '@/domain/usecases'
 
 const TableMain: React.FC = () => {
   const { getData, loading, setNewPage } = useContext(TableContext)
-  const { setNameFilter, filter, removeFilter } = useContext(FilterContext)
+  const { setNameFilter, filter, removeFilter, setColumnStatus } = useContext(FilterContext)
   const [showDialog, setShowDialog] = useState<boolean>(false)
   useEffect(() => {
     getData()
@@ -49,6 +49,7 @@ const TableMain: React.FC = () => {
 
   const deleteFilter = (elem: FilterData.ModelFilterNumber): void => {
     removeFilter(elem)
+    setColumnStatus(elem)
   }
 
   return (

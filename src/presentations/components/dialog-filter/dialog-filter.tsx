@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
-import { ContainerItem, GridContainer, MyButtonGroup, MyTextField } from './styled'
+import { ContainerItem, GridContainer, MyButtonGroup, MyInputLabel, MyTextField } from './styled'
 import { MyDropDown } from '..'
-import { InputLabel, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import { FilterContext } from '@/main/contexts'
 import CloseIcon from '@material-ui/icons/Close'
 import IconButton from '@material-ui/core/IconButton/IconButton'
@@ -14,19 +14,12 @@ type DialogFilterProps = {
 }
 
 const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterProps) => {
-  const { setNumericFilter } = useContext(FilterContext)
+  const { setNumericFilter, columnsFilter, setColumnStatus } = useContext(FilterContext)
   const [value, setValue] = useState<string>('')
   const [columnValue, setColumnValue] = useState<string>('')
   const [logical, setLogical] = useState<FilterData.LogicalOperator>(FilterData.LogicalOperator['maior que'])
 
   const logicalFilter = ['maior que', 'menor que', 'igual a']
-  const columnsFilter = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water'
-  ]
 
   const handleColumnValue = (event: React.ChangeEvent<{
     name?: string | undefined
@@ -49,11 +42,16 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
   }
 
   const saveFilter = (): void => {
-    setNumericFilter({
+    const numericFilter: FilterData.ModelFilterNumber = {
       column: columnValue,
       logicalOperator: logical,
       value: value
-    })
+    }
+    setNumericFilter(numericFilter)
+    setValue('')
+    setLogical(FilterData.LogicalOperator['maior que'])
+    setColumnValue('')
+    setColumnStatus(numericFilter)
   }
 
   return (
@@ -62,15 +60,15 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
         <Typography variant="h6">Filtrar por</Typography>
       </ContainerItem>
       <ContainerItem>
-        <InputLabel>Colunas</InputLabel>
+        <MyInputLabel>Colunas</MyInputLabel>
         <MyDropDown
           onChange={(event) => { handleColumnValue(event) }}
           value={columnValue}
-          cellValues={columnsFilter}
+          cellValues={columnsFilter.filter(elem => !elem.disable).map(elem => String(elem.name))}
         />
       </ContainerItem>
       <ContainerItem>
-      <InputLabel>Tipo</InputLabel>
+      <MyInputLabel>Tipo</MyInputLabel>
         <MyDropDown
           onChange={(event) => { handleChangeLogical(event) }}
           value={logical}
@@ -78,7 +76,7 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
         />
       </ContainerItem>
       <ContainerItem>
-        <InputLabel>Valor</InputLabel>
+        <MyInputLabel>Valor</MyInputLabel>
         <MyTextField
           value={value}
           variant="standard"
