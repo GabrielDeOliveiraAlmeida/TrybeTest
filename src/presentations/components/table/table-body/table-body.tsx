@@ -12,27 +12,30 @@ const MyTableBody: React.FC = () => {
   const rowsPerPage = 10
 
   const renderTableRows = (): JSX.Element => {
-    console.log({ Filters: filter })
+    console.log({ Filters: filter, Data: data })
     const name = filter.filters.filterByName.name
-    const dataFiltered = data.filter(elem => {
-      return name.length > 0 ? elem.name.includes(name) : data
-    }).filter((data: LoadData.ModelResults) => {
-      return filter.filters.filterByNumericValues.every(valueFilter => {
-        const key: keyof LoadData.ModelResults = valueFilter.column as keyof LoadData.ModelResults
-        switch (valueFilter.logicalOperator) {
-          case FilterData.LogicalOperator['igual a']: {
-            return valueFilter.value === data[key]
-          }
-          case FilterData.LogicalOperator['maior que']: {
-            return valueFilter.value > data[key]
-          }
-          default: {
-            return valueFilter.value < data[key]
-          }
-        }
+    let dataFiltered = data
+    if (name.length > 0) {
+      dataFiltered = data.filter(elem => {
+        return elem.name.includes(name)
       })
-    })
-
+    }
+    if (filter.filters.filterByNumericValues.length > 0) {
+      dataFiltered = dataFiltered.filter((data: LoadData.ModelResults) => {
+        return filter.filters.filterByNumericValues.some(valueFilter => {
+          const key: keyof LoadData.ModelResults = valueFilter.column as keyof LoadData.ModelResults
+          if (FilterData.LogicalOperator['igual a']) {
+            return valueFilter.value === data[key]
+          } else if (FilterData.LogicalOperator['maior que']) {
+            return valueFilter.value > data[key]
+          } else if (FilterData.LogicalOperator['menor que']) {
+            return valueFilter.value < data[key]
+          } else {
+            return false
+          }
+        })
+      })
+    }
     return (
       <>
         {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
