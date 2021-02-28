@@ -2,7 +2,7 @@ export interface FilterData {
   filter: FilterData.Model
   setNumericFilter: (newFilter: FilterData.ModelFilterNumber) => void
   setNameFilter: (newFilter: FilterData.ModeFilterName) => void
-  removeFilter: (newFilter: FilterData.ModeFilterName) => void
+  removeFilter: (newFilter: FilterData.ModelFilterNumber) => void
 }
 
 export namespace FilterData {

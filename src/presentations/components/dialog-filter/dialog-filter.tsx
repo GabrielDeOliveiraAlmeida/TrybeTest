@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { ContainerItem, GridContainer, MyButtonGroup, MyTextField } from './styled'
 import { MyDropDown } from '..'
-import { Typography } from '@material-ui/core'
+import { InputLabel, Typography } from '@material-ui/core'
 import { FilterContext } from '@/main/contexts'
 import CloseIcon from '@material-ui/icons/Close'
 import IconButton from '@material-ui/core/IconButton/IconButton'
@@ -62,6 +62,7 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
         <Typography variant="h6">Filtrar por</Typography>
       </ContainerItem>
       <ContainerItem>
+        <InputLabel>Colunas</InputLabel>
         <MyDropDown
           onChange={(event) => { handleColumnValue(event) }}
           value={columnValue}
@@ -69,6 +70,7 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
         />
       </ContainerItem>
       <ContainerItem>
+      <InputLabel>Tipo</InputLabel>
         <MyDropDown
           onChange={(event) => { handleChangeLogical(event) }}
           value={logical}
@@ -76,10 +78,10 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
         />
       </ContainerItem>
       <ContainerItem>
+        <InputLabel>Valor</InputLabel>
         <MyTextField
           value={value}
           variant="standard"
-          label={'Valor'}
           onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             handleTextField(event)
           }}

@@ -1,17 +1,28 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { MyTable, MainContainer, MyTableContainer, ContainerGrid, ContainerFilterMain, ContainerFilterItem, GridModal } from './styles'
+import {
+  MyTable,
+  MainContainer,
+  MyTableContainer,
+  ContainerGrid,
+  ContainerFilterMain,
+  ContainerFilterItem,
+  GridModal,
+  ContainerChipsFilter,
+  ContainerEachChip
+} from './styles'
 import { MyTableBody, TableHeader } from '@/presentations/components'
 import { FilterContext, TableContext } from '@/main/contexts'
 import MyTablePagination from '@/presentations/components/table/table-pagination/table-pagination'
 import LinearProgress from '@material-ui/core/LinearProgress/LinearProgress'
-import { TextField } from '@material-ui/core'
+import { Chip, TextField } from '@material-ui/core'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import Button from '@material-ui/core/Button/Button'
 import DialogFilter from '@/presentations/components/dialog-filter/dialog-filter'
+import { FilterData } from '@/domain/usecases'
 
 const TableMain: React.FC = () => {
   const { getData, loading, setNewPage } = useContext(TableContext)
-  const { setNameFilter } = useContext(FilterContext)
+  const { setNameFilter, filter, removeFilter } = useContext(FilterContext)
   const [showDialog, setShowDialog] = useState<boolean>(false)
   useEffect(() => {
     getData()
@@ -36,9 +47,13 @@ const TableMain: React.FC = () => {
     )
   }
 
-  const filtroContainer = (): JSX.Element => {
-    return (
-      <ContainerFilterMain container item>
+  const deleteFilter = (elem: FilterData.ModelFilterNumber): void => {
+    removeFilter(elem)
+  }
+
+  return (
+    <MainContainer container>
+      <ContainerFilterMain item>
         <ContainerFilterItem item>
           <TextField
             variant="standard"
@@ -56,11 +71,18 @@ const TableMain: React.FC = () => {
       </Button>
         </ContainerFilterItem>
       </ContainerFilterMain>
-    )
-  }
-  return (
-    <MainContainer container>
-      {filtroContainer()}
+      <ContainerChipsFilter>
+        {filter.filters.filterByNumericValues.map((elem, index) => {
+          return (
+            <ContainerEachChip key={index}>
+              <Chip
+                onDelete={() => { deleteFilter(elem) }}
+                label={`${elem.column} ${elem.logicalOperator} ${elem.value}`}
+              />
+            </ContainerEachChip>
+          )
+        })}
+      </ContainerChipsFilter>
       <ContainerGrid>
         {loading && <LinearProgress />}
         <MyTableContainer>

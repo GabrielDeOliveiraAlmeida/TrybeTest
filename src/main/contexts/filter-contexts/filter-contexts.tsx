@@ -37,12 +37,12 @@ export const FilterProvider: React.FC<FilterContextProps> = (props: FilterContex
     setFilters({ ...filter })
   }
 
-  const removeFilter = (newFilter: FilterData.ModeFilterName): void => {
+  const removeFilter = (newFilter: FilterData.ModelFilterNumber): void => {
     const result = filter
       .filters
       .filterByNumericValues
       .filter((item: FilterData.ModelFilterNumber) =>
-        item.column !== newFilter.name
+        item.column !== newFilter.column
       )
     filter.filters.filterByNumericValues = result
     setFilters({ ...filter })

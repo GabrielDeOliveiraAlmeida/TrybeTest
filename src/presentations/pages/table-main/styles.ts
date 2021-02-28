@@ -41,17 +41,26 @@ export const ContainerFilterMain = styled(Grid)`
     justify-content: space-between;
 `
 export const GridModal = styled(Grid)` 
-    display: flex;
-    justify-content: flex-end;
-    width: 80%;
+    right: 0;
     position: absolute;
-    transform: translate(0, 50px)
+    transform: translate(-24px, 50px);
+
     
+`
+
+export const ContainerChipsFilter = styled(Grid)` 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 80%;
+    padding-bottom: 8px;
+`
+export const ContainerEachChip = styled(Grid)` 
+    padding-bottom: 8px;
+    padding-right: 8px
 `
 
 export const ContainerFilterItem = styled(Grid)` 
     display: flex;
-    align-items: flex-end;
-    padding-right: 16px;
     padding-bottom: 24px;
 `

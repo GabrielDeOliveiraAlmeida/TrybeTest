@@ -1,14 +1,13 @@
-import Grid from '@material-ui/core/Grid/Grid'
 import Typography from '@material-ui/core/Typography/Typography'
 import React from 'react'
-import { HeaderContainer } from './styled'
+import { GridContainer, HeaderContainer } from './styled'
 
 const MyHeaderPage: React.FC = () => {
   return (
-    <Grid container>
+    <GridContainer container>
       <HeaderContainer item>
-        <Typography variant={'h4'}>Star Wars</Typography></HeaderContainer>
-    </Grid>
+        <Typography variant={'h4'}>Star Wars Planets</Typography></HeaderContainer>
+    </GridContainer>
   )
 }
 

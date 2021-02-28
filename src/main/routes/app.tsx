@@ -1,4 +1,5 @@
 import { MyHeaderPage } from '@/presentations/components'
+import { GlobalStyle } from '@/presentations/styles/global'
 import React from 'react'
 import { TableMain } from '../../presentations/pages/index'
 import { FilterProvider, TableProvider } from '../contexts'
@@ -9,6 +10,7 @@ const App: React.FC = () => {
     <TableProvider
       httpMethod={makeRemoteLoadData()} >
       <FilterProvider>
+        <GlobalStyle />
         <MyHeaderPage />
         <TableMain />
       </FilterProvider>
