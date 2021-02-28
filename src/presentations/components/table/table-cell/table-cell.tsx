@@ -27,7 +27,7 @@ const MyTableCell: React.FC<MyTableCellProps> = (props: MyTableCellProps) => {
     }
     if (Array.isArray(value)) {
       return (
-        <MyDropDown cellValues={value}></MyDropDown>
+        <MyDropDown value={value[0]} cellValues={value}></MyDropDown>
       )
     }
     return (
