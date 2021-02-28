@@ -7,14 +7,13 @@ import MyTableCell from '../table-cell/table-cell'
 import { MyTableRow } from './styled'
 
 const MyTableBody: React.FC = () => {
-  const { data, invalidColumns, page } = useContext(TableContext)
+  const { data, invalidColumns, page, setCountValue } = useContext(TableContext)
   const { filter } = useContext(FilterContext)
   const rowsPerPage = 10
 
   const renderTableRows = (): JSX.Element => {
-    console.log({ Filters: filter, Data: data })
     const name = filter.filters.filterByName.name
-    let dataFiltered = data
+    let dataFiltered: LoadData.ModelResults[] = data
     if (name.length > 0) {
       dataFiltered = data.filter(elem => {
         return elem.name.includes(name)
@@ -36,6 +35,8 @@ const MyTableBody: React.FC = () => {
         })
       })
     }
+    if (filter.filters.filterByName.name.length > 0 ||
+      filter.filters.filterByNumericValues.length > 0) { setCountValue(dataFiltered.length) }
     return (
       <>
         {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

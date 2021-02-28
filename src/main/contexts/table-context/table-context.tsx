@@ -3,27 +3,11 @@ import React, {
   createContext,
   useState
 } from 'react'
-
-type TableContextProps = {
-  data: LoadData.ModelResults[]
-  page: number
-  count: number
-  loading: boolean
-  columnsName: string[]
-  invalidColumns: string[]
-  loadData: (page: LoadData.Params) => Promise<void>
-  getData: () => Promise<void>
-  setNewPage: (page: number) => void
-}
+import { TableContextProps, TableProviderProps } from './type'
 
 const TableContext = createContext<TableContextProps>(
   {} as TableContextProps
 )
-
-type TableProviderProps = {
-  httpMethod: LoadData
-  children: React.ReactNode
-}
 
 // eslint-disable-next-line react/prop-types
 const TableProvider: React.FC<TableProviderProps> = (props: TableProviderProps) => {
@@ -34,6 +18,7 @@ const TableProvider: React.FC<TableProviderProps> = (props: TableProviderProps) 
   const [invalidColumns] = useState<string[]>(['residents'])
   const [page, setPage] = useState<number>(0)
   const [count, setCount] = useState<number>(0)
+  const [countFiltered, setCountFiltered] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(true)
 
   const setNewPage = (newPage: number): void => {
@@ -45,6 +30,10 @@ const TableProvider: React.FC<TableProviderProps> = (props: TableProviderProps) 
     }
   }
 
+  const setCountValue = (newValue: number): void => {
+    setCountFiltered(newValue)
+  }
+
   const loadData = async (params: LoadData.Params): Promise<void> => {
     const { page } = params
     setLoading(true)
@@ -54,6 +43,7 @@ const TableProvider: React.FC<TableProviderProps> = (props: TableProviderProps) 
     setLoading(false)
     setData([...data, ...getData.results])
   }
+
   const getData = async (): Promise<void> => {
     const getData = await httpMethod.loadData({
       page: page
@@ -74,10 +64,13 @@ const TableProvider: React.FC<TableProviderProps> = (props: TableProviderProps) 
         invalidColumns,
         page,
         count,
+        countFiltered,
         loading,
         setNewPage,
         loadData,
-        getData
+        getData,
+        setCountValue
+
       }}
     >
       {children}
