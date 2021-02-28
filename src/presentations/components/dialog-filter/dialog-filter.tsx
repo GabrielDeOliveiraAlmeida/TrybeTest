@@ -9,7 +9,11 @@ import { FilterData } from '@/domain/usecases'
 import { formatOnlyNumbers } from '@/utils/formatter'
 import DoneIcon from '@material-ui/icons/Done'
 
-const DialogFilter: React.FC = () => {
+type DialogFilterProps = {
+  closeModal: () => void
+}
+
+const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterProps) => {
   const { setNumericFilter } = useContext(FilterContext)
   const [value, setValue] = useState<string>('')
   const [columnValue, setColumnValue] = useState<string>('')
@@ -84,7 +88,7 @@ const DialogFilter: React.FC = () => {
       <MyButtonGroup>
         <IconButton
           aria-label='close'
-          onClick={() => { }}
+          onClick={closeModal}
         >
           <CloseIcon />
         </IconButton>

@@ -38,7 +38,15 @@ export const ContainerMain = styled(Grid)`
 export const ContainerFilterMain = styled(Grid)` 
     display: flex;
     width: 80%;
-    justify-content: flex-start;
+    justify-content: space-between;
+`
+export const GridModal = styled(Grid)` 
+    display: flex;
+    justify-content: flex-end;
+    width: 80%;
+    position: absolute;
+    transform: translate(0, 50px)
+    
 `
 
 export const ContainerFilterItem = styled(Grid)` 

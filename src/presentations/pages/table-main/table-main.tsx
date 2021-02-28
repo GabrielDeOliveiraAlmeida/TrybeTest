@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react'
-import { MyTable, MainContainer, MyTableContainer, ContainerGrid, ContainerFilterMain, ContainerFilterItem } from './styles'
+import React, { useContext, useEffect, useState } from 'react'
+import { MyTable, MainContainer, MyTableContainer, ContainerGrid, ContainerFilterMain, ContainerFilterItem, GridModal } from './styles'
 import { MyTableBody, TableHeader } from '@/presentations/components'
 import { FilterContext, TableContext } from '@/main/contexts'
 import MyTablePagination from '@/presentations/components/table/table-pagination/table-pagination'
@@ -12,7 +12,7 @@ import DialogFilter from '@/presentations/components/dialog-filter/dialog-filter
 const TableMain: React.FC = () => {
   const { getData, loading, setNewPage } = useContext(TableContext)
   const { setNameFilter } = useContext(FilterContext)
-
+  const [showDialog, setShowDialog] = useState<boolean>(false)
   useEffect(() => {
     getData()
   }, [])
@@ -22,6 +22,18 @@ const TableMain: React.FC = () => {
       name: event.target.value
     })
     setNewPage(0)
+  }
+
+  const showDialogBoxFilter = (): void => {
+    setShowDialog(!showDialog)
+  }
+
+  const renderDialogBox = (): JSX.Element => {
+    return (
+      <GridModal>
+        <DialogFilter closeModal={showDialogBoxFilter} />
+      </GridModal>
+    )
   }
 
   const filtroContainer = (): JSX.Element => {
@@ -38,7 +50,7 @@ const TableMain: React.FC = () => {
           <Button
             variant="text"
             startIcon={<FilterListIcon />}
-            onClick={() => { }}
+            onClick={() => { showDialogBoxFilter() }}
           >
             Filtros
       </Button>
@@ -48,7 +60,6 @@ const TableMain: React.FC = () => {
   }
   return (
     <MainContainer container>
-      <DialogFilter />
       {filtroContainer()}
       <ContainerGrid>
         {loading && <LinearProgress />}
@@ -60,6 +71,7 @@ const TableMain: React.FC = () => {
         </MyTableContainer>
         <MyTablePagination />
       </ContainerGrid>
+      {showDialog && renderDialogBox()}
     </MainContainer>
   )
 }
