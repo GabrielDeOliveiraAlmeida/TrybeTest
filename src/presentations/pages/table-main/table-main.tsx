@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import {
-  MyTable,
   MainContainer,
   MyTableContainer,
   ContainerGrid,
@@ -9,7 +8,8 @@ import {
   GridModal,
   ContainerChipsFilter,
   ContainerOrderBy,
-  ContainerOrderByChip
+  ContainerOrderByChip,
+  ContainerItens
 } from './styles'
 import { MyDropDown, MyTableBody, TableHeader } from '@/presentations/components'
 import { FilterContext, TableContext } from '@/main/contexts'
@@ -23,7 +23,7 @@ import { FilterData } from '@/domain/usecases'
 import MyChips from '@/presentations/components/my-chip/my-chip'
 import MyRadioButtons from '@/presentations/components/radio-buttons/radio-buttons'
 import InputLabel from '@material-ui/core/InputLabel/InputLabel'
-import Grid from '@material-ui/core/Grid/Grid'
+import Table from '@material-ui/core/Table/Table'
 
 const TableMain: React.FC = () => {
   const { getData, loading, setNewPage, invalidColumns, columnsName } = useContext(TableContext)
@@ -79,15 +79,16 @@ const TableMain: React.FC = () => {
     <MainContainer container>
       <ContainerFilterMain item>
         <ContainerFilterItem item>
-          <Grid>
+          <ContainerItens>
             <InputLabel>Filtrar pelo Nome</InputLabel>
             <TextField
+              fullWidth
               variant="standard"
               onChange={(event) => handleNameFilter(event)}
             ></TextField>
-          </Grid>
+          </ContainerItens>
           <ContainerOrderBy>
-            <Grid>
+            <ContainerItens>
               <InputLabel>Ordenar por Coluna</InputLabel>
               <MyDropDown
                 onChange={(event) => orderByColumn(event)}
@@ -95,7 +96,7 @@ const TableMain: React.FC = () => {
                 cellValues={columnsName.filter(elem => invalidColumns
                   .some((invalid) => invalid !== elem))}
               />
-            </Grid>
+            </ContainerItens>
             <ContainerOrderByChip>
               <MyRadioButtons
                 values={['ASC', 'DESC']}
@@ -128,10 +129,10 @@ const TableMain: React.FC = () => {
       <ContainerGrid>
         {loading && <LinearProgress />}
         <MyTableContainer>
-          <MyTable stickyHeader aria-label="sticky table">
+          <Table stickyHeader>
             <TableHeader />
             <MyTableBody />
-          </MyTable>
+          </Table>
         </MyTableContainer>
         <MyTablePagination />
       </ContainerGrid>

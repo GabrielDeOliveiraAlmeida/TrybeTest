@@ -6,7 +6,7 @@ import TableContainer from '@material-ui/core/TableContainer/TableContainer'
 export const MainContainer = styled(Grid)` 
     display: flex;
     flex-direction: column;
-    width:100%;
+    width: 100%;
     align-items: center;
 `
 
@@ -16,8 +16,7 @@ export const ContainerGrid = styled(Grid)`
 `
 
 export const MyTableContainer = styled(TableContainer)` 
-    height: 400px;
-    overflow: auto;
+    height: 350px;
 `
 
 export const MyTable = styled(Table)` 
@@ -37,16 +36,25 @@ export const ContainerMain = styled(Grid)`
 
 export const ContainerFilterMain = styled(Grid)` 
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     width: 80%;
+    padding-bottom: 24px;
+    padding-top: 24px;
     justify-content: space-between;
+
+    @media (max-width: 800px){
+        flex-direction: column;
+    }
 `
 export const GridModal = styled(Grid)` 
     right: 0;
     position: absolute;
-    transform: translate(-24px, 50px);
-
-    
+    transform: translate(-24px, 64px);
+    @media (max-width: 800px){
+        left: 0;
+        transform: translate(24px, -100px);
+    }
 `
 
 export const ContainerChipsFilter = styled(Grid)` 
@@ -59,19 +67,39 @@ export const ContainerChipsFilter = styled(Grid)`
 
 export const ContainerFilterItem = styled(Grid)` 
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
-    padding-bottom: 24px;
-    padding-top: 24px;
+    @media (max-width: 600px){
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
 `
+
+export const ContainerItens = styled(Grid)` 
+    @media (max-width: 800px){
+        width: 100%;
+    }
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+`
+
 export const ContainerOrderBy = styled(Grid)` 
     display: flex;
     flex-direction: row;
     padding: 0 24px;
     justify-content: center;
+    @media (max-width: 800px){
+        padding: 16px 0px;
+        width: 100%;
+        justify-content: space-between
+    }
 `
 export const ContainerOrderByChip = styled(Grid)` 
     display: flex;
     flex-direction: row;
     padding-left: 24px;
-    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
 `

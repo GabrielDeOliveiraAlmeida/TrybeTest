@@ -34,7 +34,7 @@ const MyTableBody: React.FC = () => {
     }
     if (filter.filters.filterByNumericValues.length > 0) {
       dataFiltered = dataFiltered.filter((data: LoadData.ModelResults) => {
-        return filter.filters.filterByNumericValues.some(valueFilter => {
+        return filter.filters.filterByNumericValues.every(valueFilter => {
           const key: keyof LoadData.ModelResults = valueFilter.column as keyof LoadData.ModelResults
           const value = data[key].valueOf()
           if (valueFilter.logicalOperator.toString() === 'igual a') {

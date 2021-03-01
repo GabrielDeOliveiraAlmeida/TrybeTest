@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { ContainerItem, GridContainer, MyButtonGroup, MyInputLabel, MyTextField } from './styled'
 import { MyDropDown } from '..'
 import { Typography } from '@material-ui/core'
-import { FilterContext } from '@/main/contexts'
+import { FilterContext, TableContext } from '@/main/contexts'
 import CloseIcon from '@material-ui/icons/Close'
 import IconButton from '@material-ui/core/IconButton/IconButton'
 import { FilterData } from '@/domain/usecases'
@@ -16,6 +16,7 @@ type DialogFilterProps = {
 
 const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterProps) => {
   const { setNumericFilter, columnsFilter, setColumnStatus } = useContext(FilterContext)
+  const { setNewPage, page } = useContext(TableContext)
   const [value, setValue] = useState<string>('')
   const [columnValue, setColumnValue] = useState<string>('')
   const [logical, setLogical] = useState<string>(FilterData.LogicalOperator[0])
@@ -34,7 +35,6 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
   }
 
   const handleColumn = (value: string, index: number): void => {
-    console.log()
     setLogical(value)
   }
 
@@ -82,11 +82,11 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
     setNumericFilter(numericFilter)
     setColumnStatus(numericFilter)
     setDefaultValues()
+    if (page !== 0) setNewPage(0)
   }
 
   const setDefaultValues = (): void => {
     setValue('')
-    setLogical('maior que')
     setColumnValue('')
     if (valueError) setValueError(false)
     if (columnValueError) setLogicalError(false)
