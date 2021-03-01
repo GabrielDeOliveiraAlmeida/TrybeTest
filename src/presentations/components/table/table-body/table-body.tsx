@@ -10,18 +10,18 @@ const MyTableBody: React.FC = () => {
   const { filter } = useContext(FilterContext)
   const rowsPerPage = 10
 
-  const sortByOrder = (data: LoadData.ModelResults[]): LoadData.ModelResults[] => {
-    const result = data.sort((a,b) => {
+  const comparator = (a: string, b: string): number => {
+    if (a < b) return -1
+    if (a > b) return 1
+    return 0
+  }
+  const dataSort = (data: LoadData.ModelResults[]): LoadData.ModelResults[] => {
+    return data.sort((a, b) => {
       const key: keyof LoadData.ModelResults = filter.filters.order.column as keyof LoadData.ModelResults
-
-      return a[key].toString()
-        .localeCompare(b[key].toString(),
-          undefined, {
-            numeric: true,
-            sensitivity: 'base'
-          })
+      return filter.filters.order.sort === 'ASC'
+        ? comparator(a[key].toString(), b[key].toString())
+        : -comparator(a[key].toString(), b[key].toString())
     })
-    return filter.filters.order.sort === 'ASC' ? result : result.reverse()
   }
 
   const renderTableRows = (): JSX.Element => {
@@ -53,7 +53,7 @@ const MyTableBody: React.FC = () => {
       filter.filters.filterByNumericValues.length > 0) { setCountValue(dataFiltered.length) }
     return (
       <>
-        {sortByOrder(dataFiltered)
+        {dataSort(dataFiltered)
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((tableRow: LoadData.ModelResults, index) => {
             return (
@@ -61,7 +61,6 @@ const MyTableBody: React.FC = () => {
                 key={index}
                 hover
                 tabIndex={-1}
-                onClick={() => { console.log('Clkci') }}
               >
                 {Object.keys(tableRow)
                   .map((row: string, index: number) => {
