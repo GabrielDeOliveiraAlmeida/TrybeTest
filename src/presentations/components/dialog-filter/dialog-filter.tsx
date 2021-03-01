@@ -46,7 +46,6 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
     name?: string | undefined
     value: unknown
   }>): void => {
-    console.log(Object.values(FilterData.LogicalOperator))
     setLogical(String(event.target.value))
   }
 
