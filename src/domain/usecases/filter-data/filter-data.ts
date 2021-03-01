@@ -5,6 +5,7 @@ export interface FilterData {
   setNameFilter: (newFilter: FilterData.ModeFilterName) => void
   removeFilter: (newFilter: FilterData.ModelFilterNumber) => void
   setColumnStatus: (newFilter: FilterData.ModelFilterNumber) => void
+  setOrderBy: (newFilter: FilterData.ModelOrderBy) => void
 }
 
 export namespace FilterData {
@@ -17,7 +18,15 @@ export namespace FilterData {
   export type ModelFilter = {
     filterByName: ModeFilterName
     filterByNumericValues: ModelFilterNumber[]
+    order: ModelOrderBy
   }
+
+  export type ModelOrderBy = {
+    column: string
+    sort: ModelOrderBySort
+  }
+
+  export type ModelOrderBySort = 'ASC' | 'DESC'
 
   export type ModeFilterName = {
     name: string

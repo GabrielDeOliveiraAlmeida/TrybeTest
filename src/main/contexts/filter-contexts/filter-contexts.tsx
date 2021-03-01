@@ -31,9 +31,19 @@ export const FilterProvider: React.FC<FilterContextProps> = (props: FilterContex
         name: ''
       },
       filterByNumericValues: [
-      ]
+      ],
+      order: {
+        column: 'name',
+        sort: 'ASC'
+      }
     }
   })
+
+  const setOrderBy = (order: FilterData.ModelOrderBy): void => {
+    filter.filters.order.column = order.column
+    filter.filters.order.sort = order.sort
+    setFilters({ ...filter })
+  }
 
   const setColumnStatus = (newFilter: FilterData.ModelFilterNumber): void => {
     const newColumns = columnsFilter.map(elem => {
@@ -72,7 +82,8 @@ export const FilterProvider: React.FC<FilterContextProps> = (props: FilterContex
           setNameFilter,
           setNumericFilter,
           removeFilter,
-          setColumnStatus
+          setColumnStatus,
+          setOrderBy
         }}
     >
       { children }

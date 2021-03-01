@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton/IconButton'
 import { FilterData } from '@/domain/usecases'
 import { formatOnlyNumbers } from '@/utils/formatter'
 import DoneIcon from '@material-ui/icons/Done'
+import MyRadioButtons from '../radio-buttons/radio-buttons'
 
 type DialogFilterProps = {
   closeModal: () => void
@@ -17,7 +18,11 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
   const { setNumericFilter, columnsFilter, setColumnStatus } = useContext(FilterContext)
   const [value, setValue] = useState<string>('')
   const [columnValue, setColumnValue] = useState<string>('')
-  const [logical, setLogical] = useState<FilterData.LogicalOperator>(FilterData.LogicalOperator['maior que'])
+  const [logical, setLogical] = useState<string>(FilterData.LogicalOperator[0])
+
+  const [valueError, setValueError] = useState<boolean>(false)
+  const [columnValueError, setColumnValueError] = useState<boolean>(false)
+  const [logicalError, setLogicalError] = useState<boolean>(false)
 
   const logicalFilter = ['maior que', 'menor que', 'igual a']
 
@@ -28,11 +33,21 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
     setColumnValue(String(event.target.value))
   }
 
+  const handleColumn = (value: string, index: number): void => {
+    console.log()
+    setLogical(value)
+  }
+
+  /**
+   * @deprecated
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleChangeLogical = (event: React.ChangeEvent<{
     name?: string | undefined
     value: unknown
   }>): void => {
-    setLogical(event.target.value as FilterData.LogicalOperator)
+    console.log(Object.values(FilterData.LogicalOperator))
+    setLogical(String(event.target.value))
   }
 
   const handleTextField = (event: React.ChangeEvent<HTMLInputElement |
@@ -42,16 +57,40 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
   }
 
   const saveFilter = (): void => {
+    let error = false
+    if (columnValue.length === 0) {
+      setColumnValueError(true)
+      error = true
+    }
+    if (logicalFilter.length === 0) {
+      setLogicalError(true)
+      error = true
+    }
+    if (value.length === 0) {
+      setValueError(true)
+      error = true
+    }
+    if (error) return
+
+    const key = logical as unknown as FilterData.LogicalOperator
+
     const numericFilter: FilterData.ModelFilterNumber = {
       column: columnValue,
-      logicalOperator: logical,
+      logicalOperator: key,
       value: value
     }
     setNumericFilter(numericFilter)
-    setValue('')
-    setLogical(FilterData.LogicalOperator['maior que'])
-    setColumnValue('')
     setColumnStatus(numericFilter)
+    setDefaultValues()
+  }
+
+  const setDefaultValues = (): void => {
+    setValue('')
+    setLogical('maior que')
+    setColumnValue('')
+    if (valueError) setValueError(false)
+    if (columnValueError) setLogicalError(false)
+    if (logicalError) setColumnValueError(false)
   }
 
   return (
@@ -62,6 +101,7 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
       <ContainerItem>
         <MyInputLabel>Colunas</MyInputLabel>
         <MyDropDown
+          error={columnValueError}
           onChange={(event) => { handleColumnValue(event) }}
           value={columnValue}
           cellValues={columnsFilter.filter(elem => !elem.disable).map(elem => String(elem.name))}
@@ -69,15 +109,21 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
       </ContainerItem>
       <ContainerItem>
       <MyInputLabel>Tipo</MyInputLabel>
-        <MyDropDown
+        <MyRadioButtons
+          values={logicalFilter}
+          onClick={handleColumn}
+        />
+        {/* <MyDropDown
+          error={logicalError}
           onChange={(event) => { handleChangeLogical(event) }}
           value={logical}
           cellValues={logicalFilter}
-        />
+        /> */}
       </ContainerItem>
       <ContainerItem>
         <MyInputLabel>Valor</MyInputLabel>
         <MyTextField
+          error={valueError}
           value={value}
           variant="standard"
           onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

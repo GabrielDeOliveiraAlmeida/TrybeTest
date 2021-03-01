@@ -37,6 +37,7 @@ export const ContainerMain = styled(Grid)`
 
 export const ContainerFilterMain = styled(Grid)` 
     display: flex;
+    flex-wrap: wrap;
     width: 80%;
     justify-content: space-between;
 `
@@ -55,12 +56,22 @@ export const ContainerChipsFilter = styled(Grid)`
     width: 80%;
     padding-bottom: 8px;
 `
-export const ContainerEachChip = styled(Grid)` 
-    padding-bottom: 8px;
-    padding-right: 8px
-`
 
 export const ContainerFilterItem = styled(Grid)` 
     display: flex;
+    flex-wrap: wrap;
     padding-bottom: 24px;
+    padding-top: 24px;
+`
+export const ContainerOrderBy = styled(Grid)` 
+    display: flex;
+    flex-direction: row;
+    padding: 0 24px;
+    justify-content: center;
+`
+export const ContainerOrderByChip = styled(Grid)` 
+    display: flex;
+    flex-direction: row;
+    padding-left: 24px;
+    align-items: center;
 `

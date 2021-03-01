@@ -1,4 +1,3 @@
-import { FilterData } from '@/domain/usecases'
 import { LoadData } from '@/domain/usecases/load-data/load-data'
 import { FilterContext, TableContext } from '@/main/contexts'
 import { TableBody } from '@material-ui/core'
@@ -10,6 +9,20 @@ const MyTableBody: React.FC = () => {
   const { data, invalidColumns, page, setCountValue } = useContext(TableContext)
   const { filter } = useContext(FilterContext)
   const rowsPerPage = 10
+
+  const sortByOrder = (data: LoadData.ModelResults[]): LoadData.ModelResults[] => {
+    const result = data.sort((a,b) => {
+      const key: keyof LoadData.ModelResults = filter.filters.order.column as keyof LoadData.ModelResults
+
+      return a[key].toString()
+        .localeCompare(b[key].toString(),
+          undefined, {
+            numeric: true,
+            sensitivity: 'base'
+          })
+    })
+    return filter.filters.order.sort === 'ASC' ? result : result.reverse()
+  }
 
   const renderTableRows = (): JSX.Element => {
     const name = filter.filters.filterByName.name
@@ -23,12 +36,13 @@ const MyTableBody: React.FC = () => {
       dataFiltered = dataFiltered.filter((data: LoadData.ModelResults) => {
         return filter.filters.filterByNumericValues.some(valueFilter => {
           const key: keyof LoadData.ModelResults = valueFilter.column as keyof LoadData.ModelResults
-          if (FilterData.LogicalOperator['igual a']) {
-            return valueFilter.value === data[key]
-          } else if (FilterData.LogicalOperator['maior que']) {
-            return valueFilter.value > data[key]
-          } else if (FilterData.LogicalOperator['menor que']) {
-            return valueFilter.value < data[key]
+          const value = data[key].valueOf()
+          if (valueFilter.logicalOperator.toString() === 'igual a') {
+            return valueFilter.value === value
+          } else if (valueFilter.logicalOperator.toString() === 'maior que') {
+            return valueFilter.value < value
+          } else if (valueFilter.logicalOperator.toString() === 'menor que') {
+            return valueFilter.value > value
           } else {
             return false
           }
@@ -39,7 +53,8 @@ const MyTableBody: React.FC = () => {
       filter.filters.filterByNumericValues.length > 0) { setCountValue(dataFiltered.length) }
     return (
       <>
-        {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        {sortByOrder(dataFiltered)
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((tableRow: LoadData.ModelResults, index) => {
             return (
               <MyTableRow
