@@ -9,6 +9,7 @@ import { FilterData } from '@/domain/usecases'
 import { formatOnlyNumbers } from '@/utils/formatter'
 import DoneIcon from '@material-ui/icons/Done'
 import MyRadioButtons from '../radio-buttons/radio-buttons'
+import InputLabel from '@material-ui/core/InputLabel/InputLabel'
 
 type DialogFilterProps = {
   closeModal: () => void
@@ -98,7 +99,7 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
         <Typography variant="h6">Filtrar por</Typography>
       </ContainerItem>
       <ContainerItem>
-        <MyInputLabel>Colunas</MyInputLabel>
+        <MyInputLabel><InputLabel>Colunas</InputLabel></MyInputLabel>
         <MyDropDown
           error={columnValueError}
           onChange={(event) => { handleColumnValue(event) }}
@@ -107,7 +108,7 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
         />
       </ContainerItem>
       <ContainerItem>
-      <MyInputLabel>Tipo</MyInputLabel>
+      <MyInputLabel><InputLabel>Tipo</InputLabel></MyInputLabel>
         <MyRadioButtons
           values={logicalFilter}
           onClick={handleColumn}
@@ -120,7 +121,7 @@ const DialogFilter: React.FC<DialogFilterProps> = ({ closeModal }: DialogFilterP
         /> */}
       </ContainerItem>
       <ContainerItem>
-        <MyInputLabel>Valor</MyInputLabel>
+        <MyInputLabel><InputLabel>Valor</InputLabel></MyInputLabel>
         <MyTextField
           error={valueError}
           value={value}
